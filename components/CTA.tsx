@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogFooter,
@@ -35,7 +36,11 @@ export function CTAButton({
 	message,
 }: CTAButtonProps) {
 	const formRef = useRef<HTMLFormElement>(null);
+
+	const [mailSentStatus, setMailSentStatus] = useState<string | null>(null);
+	// emailError is for validation of email
 	const [emailError, setEmailError] = useState<string | null>(null);
+	const [open, setOpen] = useState(false);
 
 	const validateEmail = (email: string) => {
 		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -53,21 +58,48 @@ export function CTAButton({
 				setTimeout(() => {
 					setEmailError(null);
 				}, 2000);
-				formRef.current.reset();
 				return;
 			}
 			const formValues = Object.fromEntries(formData.entries());
+
+			try {
+				const response = await fetch("/api/send-mail", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(formValues),
+				});
+
+				if (response.ok) {
+					setMailSentStatus("success");
+					setTimeout(() => {
+						setMailSentStatus(null);
+						setOpen(false); // Close the dialog after showing the success message
+					}, 2000);
+				} else {
+					setMailSentStatus("error");
+					setTimeout(() => {
+						setMailSentStatus(null);
+					}, 2000);
+				}
+			} catch (error) {
+				setMailSentStatus("error");
+				setTimeout(() => {
+					setMailSentStatus(null);
+				}, 2000);
+			}
 		}
 	}
 
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={() => setOpen((prev) => !prev)}>
 			<DialogTrigger asChild>
 				<Button className={className} variant={variant} size={size}>
 					{message || "Contact Us"}
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent className="max-w-[315px] sm:max-w-[425px] mx-auto rounded-lg">
 				<DialogHeader>
 					<DialogTitle>Reach Out to Us</DialogTitle>
 					<DialogDescription>
@@ -80,48 +112,58 @@ export function CTAButton({
 						{emailError}
 					</p>
 				)}
-				<form ref={formRef} className="grid gap-4 py-4">
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="name" className="text-right">
-							Name
-						</Label>
-						<Input
-							id="name"
-							name="name"
-							placeholder="John Doe"
-							className="col-span-3"
-						/>
-					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="email" className="text-right">
-							Email
-						</Label>
-						<Input
-							id="email"
-							name="email"
-							placeholder="john.doe@example.com"
-							type="email"
-							className="col-span-3"
-							required
-						/>
-					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="message" className="text-right">
-							Message
-						</Label>
-						<Textarea
-							id="message"
-							name="message"
-							placeholder="What's on your mind?"
-							className="col-span-3"
-						/>
-					</div>
-					<DialogFooter>
-						<Button type="submit" onClick={(e) => sendMail(e)}>
-							Send Message
-						</Button>
-					</DialogFooter>
-				</form>
+				{mailSentStatus === "success" ? (
+					<p className="text-sm font-medium p-2 text-center rounded-lg bg-green-500 text-white">
+						Message sent successfully!
+					</p>
+				) : mailSentStatus === "error" ? (
+					<p className="text-sm font-medium p-2 text-center rounded-lg bg-destructive text-destructive-foreground">
+						Failed to send the message. Please try again.
+					</p>
+				) : (
+					<form ref={formRef} className="grid gap-4 py-4">
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Label htmlFor="name" className="text-right">
+								Name
+							</Label>
+							<Input
+								id="name"
+								name="name"
+								placeholder="John Doe"
+								className="col-span-3"
+							/>
+						</div>
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Label htmlFor="email" className="text-right">
+								Email
+							</Label>
+							<Input
+								id="email"
+								name="email"
+								placeholder="john.doe@example.com"
+								type="email"
+								className="col-span-3"
+								required
+							/>
+						</div>
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Label htmlFor="message" className="text-right">
+								Message
+							</Label>
+							<Textarea
+								id="message"
+								name="message"
+								placeholder="What's on your mind?"
+								className="col-span-3"
+							/>
+						</div>
+						<DialogFooter>
+							<Button type="submit" onClick={(e) => sendMail(e)}>
+								Send Message
+							</Button>
+						</DialogFooter>
+					</form>
+				)}
 			</DialogContent>
 		</Dialog>
 	);

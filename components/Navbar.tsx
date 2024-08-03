@@ -28,7 +28,13 @@ const Navbar: React.FC = () => {
 					<div className="flex items-center">
 						<div className="flex-shrink-0">
 							<Link href={"/"}>
-								<BuildingIcon />
+								<Image
+									src="/logo.svg"
+									alt="BuildSleek"
+									width={35}
+									height={35}
+									className="rounded-lg"
+								/>
 							</Link>
 						</div>
 						<div className="hidden md:block">
@@ -63,25 +69,14 @@ const Navbar: React.FC = () => {
 			</div>
 			{isOpen && (
 				<div className="md:hidden transition-slow">
-					<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-						<Link
-							href="/about"
-							className="  px-3 py-2 rounded-lg text-sm font-medium block hover:underline"
-						>
+					<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col justify-between">
+						<Button onClick={() => scrollTo("about")} variant={"link"}>
 							About
-						</Link>
-						<Link
-							href="#"
-							className="  px-3 py-2 rounded-lg text-sm font-medium block hover:underline"
-						>
-							Features
-						</Link>
-						<Link
-							href="/report"
-							className="  px-3 py-2 rounded-lg text-sm font-medium block"
-						>
-							Report an issue
-						</Link>
+						</Button>
+						<Button onClick={() => scrollTo("services")} variant={"link"}>
+							Services
+						</Button>
+						<CTAButton variant={"link"} message="Get Started" />
 					</div>
 				</div>
 			)}

@@ -65,4 +65,23 @@
     background-origin: border-box;
     background-clip: padding-box, border-box;
   }
+  ::-webkit-scrollbar {
+    width: 5px;
+
+  }
+  /* the buttons on the scrollbar (arrows pointing upwards and downwards) */
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  
+  /* the draggable scrolling handle */
+  ::-webkit-scrollbar-thumb {
+    background: #4a4949f4; 
+    border-radius: 4px;
+  }
+  
+  /* on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }          
 }
