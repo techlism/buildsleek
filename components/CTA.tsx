@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 import { HTMLProps, useRef, useState } from "react";
 import { Textarea } from "./ui/textarea";
+
 type CTAButtonProps = {
 	variant?:
 		| "secondary"
@@ -38,8 +40,8 @@ export function CTAButton({
 	const formRef = useRef<HTMLFormElement>(null);
 
 	const [mailSentStatus, setMailSentStatus] = useState<string | null>(null);
-	// emailError is for validation of email
 	const [emailError, setEmailError] = useState<string | null>(null);
+	const [isSending, setIsSending] = useState<boolean>(false); // Loading state
 	const [open, setOpen] = useState(false);
 
 	const validateEmail = (email: string) => {
@@ -61,6 +63,8 @@ export function CTAButton({
 				return;
 			}
 			const formValues = Object.fromEntries(formData.entries());
+
+			setIsSending(true); // Set loading state to true
 
 			try {
 				const response = await fetch("/api/send-mail", {
@@ -88,6 +92,8 @@ export function CTAButton({
 				setTimeout(() => {
 					setMailSentStatus(null);
 				}, 2000);
+			} finally {
+				setIsSending(false); // Set loading state to false
 			}
 		}
 	}
@@ -158,8 +164,16 @@ export function CTAButton({
 							/>
 						</div>
 						<DialogFooter>
-							<Button type="submit" onClick={(e) => sendMail(e)}>
-								Send Message
+							<Button
+								type="submit"
+								onClick={(e) => sendMail(e)}
+								disabled={isSending}
+							>
+								{isSending ? (
+									<Loader2 className="animate-spin" />
+								) : (
+									"Send Message"
+								)}
 							</Button>
 						</DialogFooter>
 					</form>
