@@ -132,7 +132,7 @@ export default function UserConfirmationEmail({
 						<Text className="text-base mt-4">Best regards,</Text>
 						<Text className="text-base mt-1 text-primary font-semibold">
 							<Img
-								src="https://buildsleek.com/logo.png"
+								src="https://buildsleek.com/logo.svg"
 								alt="BuildSleek"
 								className="w-16 h-16"
 							/>
