@@ -21,35 +21,6 @@ export default function UserConfirmationEmail({
 	name,
 	message,
 }: UserConfirmationEmailProps) {
-	// return (
-	//   <Html>
-	//     <Head />
-	//     <Preview>We've Received Your Message</Preview>
-	//     <Body className="font-sans">
-	//       <Container className="mx-auto py-5 px-4">
-	//         <Text className="text-2xl font-bold mb-4">Thank You for Contacting Us</Text>
-	//         <Hr className="border-gray-300 my-4" />
-	//         <Text className="text-base mb-4">
-	//           Dear {name},
-	//         </Text>
-	//         <Text className="text-base mb-4 border">
-	//           We have received your message and will get back to you shortly. Here's a copy of your message:
-	//         </Text>
-	//         <Text className="text-base bg-gray-200 p-4 rounded-lg mb-4 italic" style={{backgroundColor : '#FFF'}}>
-	//           {message}
-	//         </Text>
-	//         <Text className="text-base">
-	//           Someone from our team will reach out to you soon.
-	//           We are using gmail as our automated email service. The next email you receive will be from our official email address.
-	//         </Text>
-	//         <Text className="text-base mt-4">
-	//           Best regards,<br />
-	//           BuildSleek.
-	//         </Text>
-	//       </Container>
-	//     </Body>
-	//   </Html>
-	// );
 	return (
 		<Tailwind
 			config={{
@@ -108,9 +79,9 @@ export default function UserConfirmationEmail({
 		>
 			<Html>
 				<Head />
-				<Preview>We've Received Your Message</Preview>
-				<Body className="font-sans text-accent">
-					<Container className="mx-auto py-5 px-4">
+				<Preview>Message Acknowledgement</Preview>
+				<Body className="font-sans dark:text-white text-black">
+					<Container className="mx-auto py-4">
 						<Text className="text-xl font-bold mb-4">
 							Thank You for Contacting Us
 						</Text>
@@ -132,7 +103,7 @@ export default function UserConfirmationEmail({
 						<Text className="text-base mt-4">Best regards,</Text>
 						<Text className="text-base mt-1 text-primary font-semibold">
 							<Img
-								src="https://buildsleek.com/logo.svg"
+								src="/logo.svg"
 								alt="BuildSleek"
 								className="w-16 h-16"
 							/>
