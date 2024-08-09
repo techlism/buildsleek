@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { HTMLProps, useRef, useState } from "react";
 import { Textarea } from "./ui/textarea";
+import Link from "next/link";
 
 type CTAButtonProps = {
 	variant?:
@@ -110,7 +111,7 @@ export function CTAButton({
 					<DialogTitle>Reach Out to Us</DialogTitle>
 					<DialogDescription>
 						Got a question, a project, or just want to say hi? Drop us a message
-						below, and we promise to respond (eventually).
+						through the form below or send us an <Link href={'mailto:workwithus@buildsleek.com'} className="underline hover:underline-offset-1 hover:underline text-primary font-medium text-lg">email</Link>.
 					</DialogDescription>
 				</DialogHeader>
 				{emailError && (
