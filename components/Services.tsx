@@ -1,187 +1,212 @@
-"use client";
-import { motion } from "framer-motion";
-import * as React from "react";
-import { CTAButton } from "./CTA";
+import { Separator } from "./ui/separator";
 
 const services = [
-	{
-		title: "Full-Stack Development",
-		description:
-			"We'll handle everything from front-end to back-end, creating a seamless and integrated experience for your users. Whether it's a simple website or a complex application, we've got you covered.",
-		svgPath: "/SVGs/all-covered-svgrepo-com.svg",
-	},
-	{
-		title: "Website Development",
-		description:
-			"Let's build a website that not only looks great but also functions smoothly across all devices. From design to deployment, we'll create something that truly represents your brand.",
-		svgPath: "/SVGs/availability-svgrepo-com.svg",
-	},
-	{
-		title: "API Integration",
-		description:
-			"Need to connect your platform with other services? We'll seamlessly integrate third-party APIs to enhance functionality and ensure everything works together perfectly.",
-		svgPath: "/SVGs/api-interface-svgrepo-com.svg",
-	},
-	{
-		title: "Backend Development",
-		description:
-			"We'll build a strong, scalable backend that powers your application efficiently. With our expertise, your backend will be robust, reliable, and ready to scale as your business grows.",
-		svgPath: "/SVGs/ddos-protection-svgrepo-com.svg",
-	},
-	{
-		title: "Mobile App Development",
-		description:
-			"Looking to reach users on the go? We'll develop mobile apps that deliver a seamless experience across devices, ensuring your brand is always within reach.",
-		svgPath: "/SVGs/mobile-app-svgrepo-com.svg",
-	},
-	{
-		title: "Cloud Solutions",
-		description:
-			"We'll help you leverage cloud computing to improve scalability, accessibility, and reliability. Whether you're moving to the cloud or optimizing existing infrastructure, we're here to assist.",
-		svgPath: "/SVGs/cloud-backup-svgrepo-com.svg",
-	},
-	{
-		title: "Data Analytics",
-		description:
-			"Let's turn your data into actionable insights. We'll analyze your data and provide you with the information you need to make informed decisions and drive growth.",
-		svgPath: "/SVGs/data-analysis-svgrepo-com.svg",
-	},
-	{
-		title: "Domain and DNS Management",
-		description:
-			"We'll take care of your domain and DNS settings, ensuring your website is always accessible and configured correctly, so you can focus on running your business.",
-		svgPath: "/SVGs/dns-svgrepo-com.svg",
-	},
-	{
-		title: "UI/UX Design",
-		description:
-			"We'll craft intuitive and engaging user interfaces that provide a smooth and enjoyable experience for your users. Let's create something that not only looks good but feels right.",
-		svgPath: "/SVGs/intelligent-positioning-svgrepo-com.svg",
-	},
-	{
-		title: "Performance Optimization",
-		description:
-			"We'll fine-tune your application for optimal performance, reducing load times and improving overall user experience. Your users will thank you for the speed and responsiveness.",
-		svgPath: "/SVGs/page-analysis-svgrepo-com.svg",
-	},
-	{
-		title: "Email Setup and Configuration",
-		description:
-			"Need to set up a newsletter or configure custom email addresses for your domain? We’ll handle the setup so you can communicate effortlessly and professionally with your audience.",
-		svgPath: "/SVGs/mail-reception-svgrepo-com.svg",
-	},
+  {
+    title: "AI Automation & Smart Tools",
+    description: "Use AI to streamline business processes, automate content creation, build smart assistants that reduce manual work and many more.",
+    features: [
+      "AI-driven content and response generation",
+      "Process automation using custom models",
+      "Business assistant and chatbot integration",
+      "Real-time insight generation"
+    ],
+    svgPath: "/svgs/ai.svg",
+  },
+  {
+    title: "Data Analytics & Visualization",
+    description: "Make data useful with clean pipelines, dashboards, and predictive analytics that support better decisions.",
+    features: [
+      "Data collection and transformation",
+      "Interactive dashboards and reports",
+      "Trend forecasting and anomaly alerts",
+      "Simplified access to business insights"
+    ],
+    svgPath: "/svgs/analytics.svg",
+  },
+  {
+    title: "System Integration & API Services",
+    description: "Connect your tools and platforms with custom APIs and integrations for smooth and scalable operations.",
+    features: [
+      "Custom API design and implementation",
+      "Third-party service integration",
+      "Secure and scalable data flow",
+    ],
+    svgPath: "/svgs/api.svg",
+  },
+  {
+    title: "Backend Systems Development",
+    description: "Build the core of your applications with secure, fast, and scalable backend systems tailored to your business logic.",
+    features: [
+      "Modular and scalable architecture",
+      "Database planning and optimization",
+      "User and permission management",
+      "Performance and uptime monitoring"
+    ],
+    svgPath: "/svgs/backend.svg",
+  },
+  {
+    title: "Cloud Deployment & DevOps",
+    description: "Set up cloud environments, automate deployments, and keep systems reliable with smart infrastructure practices.",
+    features: [
+      "Cloud environment setup and scaling",
+      "Deployment automation (CI/CD)",
+      "System monitoring and logging",
+      "Cost-efficient resource management"
+    ],
+    svgPath: "/svgs/cloud.svg",
+  },
+  {
+    title: "Email & Communication Systems",
+    description: "Set up email platforms and automate communication flows to improve outreach, support, and internal messaging.",
+    features: [
+      "Professional email and domain setup",
+      "Automated email workflows",
+      "Email marketing system integration",
+      "Team chat and collaboration tools"
+    ],
+    svgPath: "/svgs/email.svg",
+  },
+  {
+    title: "Full Stack Development",
+    description: "Design and build full applications from user interface to backend — optimized for performance, usability, and deployment.",
+    features: [
+      "Frontend and backend development",
+      "Data and user management",
+      "Responsive design implementation",
+      "End-to-end deployment and testing"
+    ],
+    svgPath: "/svgs/fullstack.svg",
+  },
+  {
+    title: "Machine Learning & AI Models",
+    description: "Develop machine learning systems for personalization, predictions, language tasks, or visual recognition.",
+    features: [
+      "Custom ML model creation and tuning",
+      "Text and language processing",
+      "Image and document analysis",
+      "Recommendation and scoring systems"
+    ],
+    svgPath: "/svgs/ml.svg",
+  },
+  {
+    title: "Mobile App Development",
+    description: "Build mobile apps that run smoothly across devices, with features that users expect and designs that stand out.",
+    features: [
+      "Native and cross-platform development",
+      "Push notifications and real-time updates",
+      "Mobile-friendly interface design",
+      "Store listing and performance tuning"
+    ],
+    svgPath: "/svgs/mobile.svg",
+  },
+  {
+    title: "User Interface & Experience Design",
+    description: "Design clean, functional user interfaces that improve usability, brand consistency, and conversion rates.",
+    features: [
+      "User flow and journey mapping",
+      "Wireframing and prototyping",
+      "Modern, responsive visual design",
+      "Feedback-driven design improvement"
+    ],
+    svgPath: "/svgs/uiux.svg",
+  },
+  {
+    title: "Web Development & Optimization",
+    description: "Develop high-performance websites that are fast, mobile-friendly, and optimized for both users and search engines.",
+    features: [
+      "Responsive and accessible design",
+      "SEO-friendly development",
+      "Page speed and performance tuning",
+      "Maintenance and uptime support"
+    ],
+    svgPath: "/svgs/web.svg",
+  },
 ];
 
-export default function Services() {
-	return (
-		<section className="w-full" id="services">
-			<motion.div
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ duration: 0.5 }}
-				className="p-4 flex flex-col max-w-6xl justify-center items-center mx-auto text-center"
-			>
-				<h2 className="text-3xl font-bold justify-start">Our Services</h2>
-				<p className="text-gray-400 text-base mt-2 text-justify mx-auto">
-					At BuildSleek, we offer a wide range of services designed to meet your
-					digital needs and exceed your expectations. Our expert team is
-					committed to delivering high-quality solutions that drive business
-					growth and success. Explore our services below to learn more about how
-					we can help you achieve your goals.
-				</p>
-			</motion.div>
+export default async function Services() {
+  return (
+    <section className="py-16 px-6" id="services">
+      <div>
+        <div className="text-center mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h2>
+          <p className="text-lg max-w-3xl mx-auto leading-relaxed">
+            At BuildSleek, we offer a comprehensive range of services designed to meet your
+            digital needs and exceed your expectations with cutting-edge technology solutions.
+          </p>
+        </div>
 
-			<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 max-w-6xl mx-auto p-4">
-				{services.slice(0, 2).map((service) => (
-					<motion.div
-						key={service.title}
-						className="shadow-lg rounded-lg border hover:border-gradient bg-card"
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.2 }}
-						whileHover={{ scale: 1.02 }}
-					>
-						<motion.img
-							src={service.svgPath}
-							alt={service.title}
-							className="max-h-48 max-w-48"
-							initial={{ scale: 0.9 }}
-							animate={{ scale: 1 }}
-							transition={{ duration: 0.5 }}
-						/>
-						<div className="p-4">
-							<h3 className="text-xl font-bold">{service.title}</h3>
-							<p className="text-gray-400 text-base mt-2 text-justify">
-								{service.description}
-							</p>
-						</div>
-					</motion.div>
-				))}
-			</div>
+        <div className="space-y-12">
+          {services.map((service, index) => (
+            <div key={service.title} className="rounded-lg">
+              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 rounded-lg border-1.5 border backdrop-blur-sm bg-glassmorphic 
+                ${index % 2 === 0 ? '' : 'lg:grid-flow-col-dense'}`}>
+                
+                {/* Illustration Section */}
+                <div className={`p-8 lg:p-12 flex items-center justify-center order-1 lg:bg-transparent ${
+                  index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'
+                }`}>
+                  <div className="relative">
+                    {/* Background decorative elements */}
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-xl transform rotate-3"></div>
+                    <div className="absolute inset-0 bg-white/40 backdrop-blur-sm rounded-xl transform -rotate-3"></div>
+                    
+                    {/* Main container */}
+                    <div className="relative backdrop-blur-md rounded-xl p-8 shadow-lg">
+                      {/* Grid pattern background */}
+                      <div 
+                        className="absolute inset-0 opacity-10 rounded-xl"
+                        style={{
+                          backgroundImage: `
+                            linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)
+                          `,
+                          backgroundSize: '24px 24px'
+                        }}
+                      />
+                      
+                      {/* Icon container */}
+                      <div className="relative z-10 w-48 h-48 lg:w-56 lg:h-56 bg-gradient-to-br rounded-lg flex items-center justify-center">
+                        <img
+                          src={service.svgPath}
+                          alt={service.title}
+                          loading="lazy"
+                          className="w-40 h-40 lg:w-48 lg:h-48 object-contain"
+                        />
+                      </div>
+                      
+                      {/* Floating elements */}
+                      <div className="absolute top-4 right-4 w-3 h-3 bg-blue-400 rounded-full opacity-80"></div>
+                      <div className="absolute bottom-4 left-4 w-2 h-2 bg-primary rounded-full opacity-80"></div>
+                      <div className="absolute top-1/2 left-4 w-1 h-1 bg-blue-300 rounded-full opacity-80"></div>
+                    </div>
+                  </div>
+                </div>
 
-			<div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 gap-4 max-w-6xl mx-auto p-4 pt-0">
-				{services.map(
-					(service, index) =>
-						index !== 0 &&
-						index !== 1 &&
-						index !== services.length - 1 && (
-							<motion.div
-								key={service.title}
-								className="shadow-lg rounded-lg flex border items-center hover:border-gradient bg-card "
-								initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ duration: 0.2 }}
-								whileHover={{ scale: 1.02 }}
-							>
-								<div className="p-4">
-									<h3 className="text-xl font-bold">{service.title}</h3>
-									<p className="text-gray-400 text-base mt-2 text-justify">
-										{service.description}
-									</p>
-								</div>
-								<motion.img
-									src={service.svgPath}
-									alt={service.title}
-									className="max-h-24 max-w-24"
-									initial={{ scale: 0.9 }}
-									animate={{ scale: 1 }}
-									transition={{ duration: 0.5 }}
-								/>
-							</motion.div>
-						),
-				)}
-			</div>
-
-			<div className="grid grid-cols-1 p-4 pt-0 max-w-6xl mx-auto">
-				<motion.div
-					key={services[services.length - 1].title}
-					className="shadow-lg rounded-lg flex border items-center hover:border-gradient bg-card"
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5 }}
-					whileHover={{ scale: 1.02 }}
-				>
-					<div className="p-4">
-						<h3 className="text-xl font-bold">
-							{services[services.length - 1].title}
-						</h3>
-						<p className="text-gray-400 text-base mt-2 text-justify">
-							{services[services.length - 1].description}
-						</p>
-					</div>
-					<motion.img
-						src={services[services.length - 1].svgPath}
-						alt={services[services.length - 1].title}
-						className="max-h-24 max-w-24 lg:max-h-48 lg:max-w-48 xl:max-h-48 xl:max-w-48"
-						initial={{ scale: 0.9 }}
-						animate={{ scale: 1 }}
-						transition={{ duration: 0.5 }}
-					/>
-				</motion.div>
-			</div>
-			<div className="mb-4 mx-auto flex justify-center">
-				<CTAButton />
-			</div>
-		</section>
-	);
+                {/* Content Section */}
+                <div className={`p-8 lg:p-12 flex flex-col justify-center order-2 ${
+                  index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'
+                }`}>
+                  <div className="space-y-4 mb-6">
+                    <h3 className="text-2xl lg:text-3xl text-primary font-bold leading-tight">{service.title}</h3>
+                    <Separator/>
+                    <p className="text-base leading-relaxed font-medium">
+                      {service.description}
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {service.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-center space-x-3">
+                        <span className="text-base font-medium">-&gt; {feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

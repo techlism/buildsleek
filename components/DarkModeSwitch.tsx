@@ -1,6 +1,6 @@
 "use client";
 
-import { MonitorCog, Moon, Sun } from "lucide-react";
+import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -15,29 +15,34 @@ const DarkModeSwitch = () => {
 
 	if (!mounted) return null;
 
-	type themes = "light" | "dark" | "system";
-
-	const cycleTheme = (theme: themes) => {
-		setTheme(theme);
-	};
+	const themes = [
+		{ id: "light", icon: Sun, color: "text-amber-600" },
+		{ id: "system", icon: Monitor, color: "text-primary" },
+		{ id: "dark", icon: Moon, color: "text-blue-500" },
+	] as const;
 
 	return (
-		<div className="p-1 grid grid-cols-3 items-center gap-3 rounded-lg">
-			<button onClick={() => cycleTheme("light")}>
-				<Sun
-					className={`${theme === "light" ? "text-yellow-500 h-7 w-7" : "text-gray-500 h-6 w-6"} transition-all duration-300`}
-				/>
-			</button>
-			<button onClick={() => cycleTheme("system")}>
-				<MonitorCog
-					className={`${theme === "system" ? "text-blue-500 h-7 w-7" : "text-gray-500 h-6 w-6"} transition-all duration-300`}
-				/>
-			</button>
-			<button onClick={() => cycleTheme("dark")}>
-				<Moon
-					className={`${theme === "dark" ? "text-indigo-500 h-7 w-7" : "text-gray-500 h-6 w-6"} transition-all duration-300`}
-				/>
-			</button>
+		<div className="inline-flex items-center bg-background/40 rounded-lg p-2 backdrop-blur-sm border  shadow-md">
+			{themes.map(({ id, icon: Icon, color }) => (
+				<button
+					type="button"
+					key={id}
+					onClick={() => setTheme(id)}
+					className={`
+						flex items-center justify-center p-2 rounded-md transition-all duration-200 ease-in-out
+            			${theme === id ? "bg-background border border-border/65" : "hover:bg-background/50"}
+            			${theme === id ? "scale-105" : "scale-100"}
+            			${id !== "light" ? "ml-1" : ""}`}
+					aria-label={`Switch to ${id} theme`}
+				>
+					<Icon
+						className={`
+							w-4 h-4 transition-all duration-100 ease-in-out
+							${theme === id ? color : "text-foreground/60"}
+							${theme === id ? "scale-110" : "scale-100"}`}
+					/>
+				</button>
+			))}
 		</div>
 	);
 };

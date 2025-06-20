@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { HTMLProps, useRef, useState } from "react";
 import { Textarea } from "./ui/textarea";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type CTAButtonProps = {
 	variant?:
@@ -65,7 +66,7 @@ export function CTAButton({
 			}
 			const formValues = Object.fromEntries(formData.entries());
 
-			setIsSending(true); // Set loading state to true
+			setIsSending(true);
 
 			try {
 				const response = await fetch("/api/send-mail", {
@@ -102,16 +103,19 @@ export function CTAButton({
 	return (
 		<Dialog open={open} onOpenChange={() => setOpen((prev) => !prev)}>
 			<DialogTrigger asChild>
-				<Button className={className} variant={variant} size={size}>
+				<Button className={cn('group rounded-full px-3 py-6', className)} variant={variant ? variant : 'default'}>
 					{message || "Contact Us"}
+					<ArrowRight className="group-hover:-rotate-45 group-hover:transition-transform group-hover:duration-200"/>
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="max-w-[315px] sm:max-w-[425px] mx-auto rounded-lg">
 				<DialogHeader>
-					<DialogTitle>Reach Out to Us</DialogTitle>
-					<DialogDescription>
+					<DialogTitle className="text-xl">Reach Out to Us</DialogTitle>
+					<DialogDescription className="font-medium text-base">
 						Got a question, a project, or just want to say hi? Drop us a message
-						through the form below or send us an <Link href={'mailto:workwithus@buildsleek.com'} className="underline hover:underline-offset-1 hover:underline text-primary font-medium text-lg">email</Link>.
+						through the form below or send us an email at the address below. <br/> 
+						<Link href={'mailto:workwithus@buildsleek.com'} className="underline hover:underline-offset-1 hover:underline text-primary font-medium text-lg">workwithus@buildsleek.com</Link> <br/>
+						We will get back you at the earliest.
 					</DialogDescription>
 				</DialogHeader>
 				{emailError && (
@@ -169,6 +173,7 @@ export function CTAButton({
 								type="submit"
 								onClick={(e) => sendMail(e)}
 								disabled={isSending}
+								className="rounded-full px-4 py-6"
 							>
 								{isSending ? (
 									<Loader2 className="animate-spin" />

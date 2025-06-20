@@ -1,9 +1,11 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import { GeistSans } from "geist/font/sans";
-
+// import { GeistSans } from "geist/font/sans";
+import { Manrope } from 'next/font/google';
 import type { Metadata } from "next";
+
+const manrope = Manrope({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
 	title: "BuildSleek",
@@ -26,10 +28,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${GeistSans.className}`}>
-				<ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+			<body className={`${manrope.className}`} lang="en">
+				{/* defaultTheme="dark" enableSystem */}
+				<ThemeProvider attribute="class" >
 					<Navbar />
-					{children}
+					<div className="max-w-7xl mx-auto m-4">
+						{children}
+					</div>
 				</ThemeProvider>
 			</body>
 		</html>
