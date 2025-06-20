@@ -1,27 +1,24 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { RateLimiterMemory } from 'rate-limiter-flexible';
+import { RateLimiter } from './lib/rate-limiter'; // adjust path as needed
 
-// Initialize the rate limiter
-const rateLimiter = new RateLimiterMemory({
-  points: 3, // Number of points
-  duration: 60, // Per second
+
+// Initialize rate limiter
+const rateLimiter = new RateLimiter({
+  windowSize: 60 * 1000,  // 60 seconds in ms
+  maxRequests: 3,
 });
 
-export async function middleware(request: NextRequest) {
-  try {
-    // Consume a point for each request
-    await rateLimiter.consume(request.ip!);
+export function middleware(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown';
 
-    // If successful, proceed with the request
-    return NextResponse.next();
-  } catch (rateLimiterRes) {
-    // If rate limit is exceeded, send a 429 response
+  if (rateLimiter.limit(ip)) {
     return new NextResponse('Too many requests', { status: 429 });
   }
+
+  return NextResponse.next();
 }
 
-// Specify the paths that will use this middleware
 export const config = {
   matcher: '/api/:path*',
 };
