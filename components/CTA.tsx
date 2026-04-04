@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
-	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogFooter,
@@ -12,22 +11,21 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { HTMLProps, useRef, useState } from "react";
 import { Textarea } from "./ui/textarea";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 type CTAButtonProps = {
 	variant?:
-		| "secondary"
-		| "destructive"
-		| "outline"
-		| "ghost"
-		| "link"
-		| "default"
-		| null
-		| undefined;
+	| "secondary"
+	| "destructive"
+	| "outline"
+	| "ghost"
+	| "link"
+	| "default"
+	| null
+	| undefined;
 	size?: "default" | "sm" | "lg" | "icon";
 	className?: HTMLProps<HTMLElement>["className"];
 	message?: string;
@@ -41,8 +39,9 @@ export function CTAButton({
 }: CTAButtonProps) {
 	const formRef = useRef<HTMLFormElement>(null);
 
-	const [mailSentStatus, setMailSentStatus] = useState<string | null>(null);
-	const [emailError, setEmailError] = useState<string | null>(null);
+	const [mailSentStatus, setMailSentStatus] = useState<"success" | "error" | null>(null);
+	const [formErrors, setFormErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+	const [formValues, setFormValues] = useState({ name: "", email: "", message: "" });
 	const [isSending, setIsSending] = useState<boolean>(false); // Loading state
 	const [open, setOpen] = useState(false);
 
@@ -51,21 +50,48 @@ export function CTAButton({
 		return emailPattern.test(email);
 	};
 
-	async function sendMail(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+	const validateForm = () => {
+		const errors: { name?: string; email?: string; message?: string } = {};
+
+		if (!formValues.name.trim() || formValues.name.trim().length < 2) {
+			errors.name = "Please enter your full name.";
+		}
+
+		if (!validateEmail(formValues.email)) {
+			errors.email = "Please enter a valid email address.";
+		}
+
+		if (!formValues.message.trim() || formValues.message.trim().length < 10) {
+			errors.message = "Please add a short message (at least 10 characters).";
+		}
+
+		setFormErrors(errors);
+		return Object.keys(errors).length === 0;
+	};
+
+	const resetFormState = () => {
+		setFormErrors({});
+		setMailSentStatus(null);
+		setIsSending(false);
+		setFormValues({ name: "", email: "", message: "" });
+	};
+
+	const handleDialogOpenChange = (nextOpen: boolean) => {
+		setOpen(nextOpen);
+		if (!nextOpen) {
+			resetFormState();
+		}
+	};
+
+	async function sendMail(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
+		setMailSentStatus(null);
+
+		if (!validateForm()) {
+			return;
+		}
 
 		if (formRef.current) {
-			const formData = new FormData(formRef.current);
-			const email = formData.get("email") as string;
-			if (!validateEmail(email)) {
-				setEmailError("Please enter a valid email address.");
-				setTimeout(() => {
-					setEmailError(null);
-				}, 2000);
-				return;
-			}
-			const formValues = Object.fromEntries(formData.entries());
-
 			setIsSending(true);
 
 			try {
@@ -74,26 +100,22 @@ export function CTAButton({
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify(formValues),
+					body: JSON.stringify({
+						name: formValues.name.trim(),
+						email: formValues.email.trim(),
+						message: formValues.message.trim(),
+					}),
 				});
 
 				if (response.ok) {
 					setMailSentStatus("success");
-					setTimeout(() => {
-						setMailSentStatus(null);
-						setOpen(false); // Close the dialog after showing the success message
-					}, 2000);
+					setFormErrors({});
+					setFormValues({ name: "", email: "", message: "" });
 				} else {
 					setMailSentStatus("error");
-					setTimeout(() => {
-						setMailSentStatus(null);
-					}, 2000);
 				}
-			} catch (error) {
+			} catch {
 				setMailSentStatus("error");
-				setTimeout(() => {
-					setMailSentStatus(null);
-				}, 2000);
 			} finally {
 				setIsSending(false); // Set loading state to false
 			}
@@ -101,79 +123,87 @@ export function CTAButton({
 	}
 
 	return (
-		<Dialog open={open} onOpenChange={() => setOpen((prev) => !prev)}>
+		<Dialog open={open} onOpenChange={handleDialogOpenChange}>
 			<DialogTrigger asChild>
-				<Button className={cn('group rounded-full px-3 py-6', className)} variant={variant ? variant : 'default'}>
+				<Button className={cn('group rounded-xl px-4 py-6', className)} variant={variant ? variant : 'default'}>
 					{message || "Contact Us"}
-					<ArrowRight className="group-hover:-rotate-45 group-hover:transition-transform group-hover:duration-200"/>
+					<ArrowRight className="group-hover:-rotate-45 group-hover:transition-transform group-hover:duration-200" />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="max-w-[315px] sm:max-w-[425px] mx-auto rounded-lg">
+			<DialogContent className="max-w-[315px] sm:max-w-[440px] mx-auto rounded-xl glass-surface">
 				<DialogHeader>
 					<DialogTitle className="text-xl">Reach Out to Us</DialogTitle>
-					<DialogDescription className="font-medium text-base">
+					<DialogDescription className="font-medium text-base text-foreground/75">
 						Got a question, a project, or just want to say hi? Drop us a message
-						through the form below or send us an email at the address below. <br/> 
-						<Link href={'mailto:workwithus@buildsleek.com'} className="underline hover:underline-offset-1 hover:underline text-primary font-medium text-lg">workwithus@buildsleek.com</Link> <br/>
-						We will get back you at the earliest.
+						through the form below
+						. We will get back to you at the earliest.
 					</DialogDescription>
 				</DialogHeader>
-				{emailError && (
-					<p className="text-sm font-medium p-2 text-center rounded-lg bg-destructive text-destructive-foreground">
-						{emailError}
-					</p>
-				)}
 				{mailSentStatus === "success" ? (
-					<p className="text-sm font-medium p-2 text-center rounded-lg bg-green-500 text-white">
-						Message sent successfully!
-					</p>
+					<div className="rounded-xl border border-primary/30 bg-primary/10 p-4 text-center space-y-2">
+						<CheckCircle2 className="mx-auto h-8 w-8 text-primary" />
+						<p className="text-sm font-semibold text-foreground">Message sent successfully.</p>
+						<p className="text-sm text-foreground/75">We will reach out to you shortly.</p>
+						<Button className="mt-1" onClick={() => setOpen(false)}>Close</Button>
+					</div>
 				) : mailSentStatus === "error" ? (
 					<p className="text-sm font-medium p-2 text-center rounded-lg bg-destructive text-destructive-foreground">
 						Failed to send the message. Please try again.
 					</p>
 				) : (
-					<form ref={formRef} className="grid gap-4 py-4">
+					<form ref={formRef} className="grid gap-4 py-4" onSubmit={sendMail}>
 						<div className="grid grid-cols-4 items-center gap-4">
 							<Label htmlFor="name" className="text-right">
 								Name
 							</Label>
-							<Input
-								id="name"
-								name="name"
-								placeholder="John Doe"
-								className="col-span-3"
-							/>
+							<div className="col-span-3 space-y-1">
+								<Input
+									id="name"
+									name="name"
+									placeholder="John Doe"
+									value={formValues.name}
+									onChange={(e) => setFormValues((prev) => ({ ...prev, name: e.target.value }))}
+								/>
+								{formErrors.name && <p className="text-xs text-destructive">{formErrors.name}</p>}
+							</div>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
 							<Label htmlFor="email" className="text-right">
 								Email
 							</Label>
-							<Input
-								id="email"
-								name="email"
-								placeholder="john.doe@example.com"
-								type="email"
-								className="col-span-3"
-								required
-							/>
+							<div className="col-span-3 space-y-1">
+								<Input
+									id="email"
+									name="email"
+									placeholder="john.doe@example.com"
+									type="email"
+									value={formValues.email}
+									onChange={(e) => setFormValues((prev) => ({ ...prev, email: e.target.value }))}
+									required
+								/>
+								{formErrors.email && <p className="text-xs text-destructive">{formErrors.email}</p>}
+							</div>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
 							<Label htmlFor="message" className="text-right">
 								Message
 							</Label>
-							<Textarea
-								id="message"
-								name="message"
-								placeholder="What's on your mind?"
-								className="col-span-3"
-							/>
+							<div className="col-span-3 space-y-1">
+								<Textarea
+									id="message"
+									name="message"
+									placeholder="What's on your mind?"
+									value={formValues.message}
+									onChange={(e) => setFormValues((prev) => ({ ...prev, message: e.target.value }))}
+								/>
+								{formErrors.message && <p className="text-xs text-destructive">{formErrors.message}</p>}
+							</div>
 						</div>
 						<DialogFooter>
 							<Button
 								type="submit"
-								onClick={(e) => sendMail(e)}
 								disabled={isSending}
-								className="rounded-full px-4 py-6"
+								className="rounded-xl px-4 py-6"
 							>
 								{isSending ? (
 									<Loader2 className="animate-spin" />

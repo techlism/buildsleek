@@ -6,7 +6,7 @@ import Services from "@/components/Services";
 
 export default async function Home() {
 	return (
-		<main className="flex flex-col items-center justify-between" id="main">
+		<main className="flex flex-col items-center" id="main">
 			<HeroSection />
 			<AboutUs />
 			<Services />

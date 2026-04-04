@@ -125,11 +125,11 @@ const services = [
 
 export default async function Services() {
   return (
-    <section className="py-16 px-6" id="services">
+    <section className="section-wrap" id="services">
       <div>
-        <div className="text-center mb-6">
+        <div className="text-center mb-10 reveal-up">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h2>
-          <p className="text-lg max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg max-w-3xl mx-auto leading-relaxed text-foreground/80">
             At BuildSleek, we offer a comprehensive range of services designed to meet your
             digital needs and exceed your expectations with cutting-edge technology solutions.
           </p>
@@ -137,35 +137,34 @@ export default async function Services() {
 
         <div className="space-y-12">
           {services.map((service, index) => (
-            <div key={service.title} className="rounded-lg">
-              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 rounded-lg border-1.5 border backdrop-blur-sm bg-glassmorphic 
+            <div key={service.title} className="rounded-lg reveal-up">
+              <div className={`glass-surface grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 rounded-2xl
                 ${index % 2 === 0 ? '' : 'lg:grid-flow-col-dense'}`}>
-                
+
                 {/* Illustration Section */}
-                <div className={`p-8 lg:p-12 flex items-center justify-center order-1 lg:bg-transparent ${
-                  index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'
-                }`}>
+                <div className={`p-8 lg:p-12 flex items-center justify-center order-1 lg:bg-transparent ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'
+                  }`}>
                   <div className="relative">
                     {/* Background decorative elements */}
-                    <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-xl transform rotate-3"></div>
-                    <div className="absolute inset-0 bg-white/40 backdrop-blur-sm rounded-xl transform -rotate-3"></div>
-                    
+                    <div className="absolute inset-0 bg-white/35  dark:bg-white/70 backdrop-blur-sm rounded-xl transform rotate-2"></div>
+                    <div className="absolute inset-0 bg-white/25 dark:bg-white/50 backdrop-blur-sm rounded-xl transform -rotate-2"></div>
+
                     {/* Main container */}
-                    <div className="relative backdrop-blur-md rounded-xl p-8 shadow-lg">
+                    <div className="relative rounded-xl bg-white p-8 border border-primary/20 bg-background/45 backdrop-blur-md">
                       {/* Grid pattern background */}
-                      <div 
-                        className="absolute inset-0 opacity-10 rounded-xl"
+                      <div
+                        className="absolute inset-0 opacity-20 rounded-xl"
                         style={{
                           backgroundImage: `
-                            linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)
+                            linear-gradient(rgba(5, 109, 255, 0.35) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(5, 109, 255, 0.35) 1px, transparent 1px)
                           `,
                           backgroundSize: '24px 24px'
                         }}
                       />
-                      
+
                       {/* Icon container */}
-                      <div className="relative z-10 w-48 h-48 lg:w-56 lg:h-56 bg-gradient-to-br rounded-lg flex items-center justify-center">
+                      <div className="relative z-10 w-48 h-48 lg:w-56 lg:h-56 rounded-lg flex items-center justify-center bg-white/55 dark:bg-white border border-primary/45">
                         <img
                           src={service.svgPath}
                           alt={service.title}
@@ -173,27 +172,26 @@ export default async function Services() {
                           className="w-40 h-40 lg:w-48 lg:h-48 object-contain"
                         />
                       </div>
-                      
+
                       {/* Floating elements */}
-                      <div className="absolute top-4 right-4 w-3 h-3 bg-blue-400 rounded-full opacity-80"></div>
-                      <div className="absolute bottom-4 left-4 w-2 h-2 bg-primary rounded-full opacity-80"></div>
-                      <div className="absolute top-1/2 left-4 w-1 h-1 bg-blue-300 rounded-full opacity-80"></div>
+                      <div className="absolute top-4 right-4 w-3 h-3 bg-primary rounded-full opacity-80"></div>
+                      <div className="absolute bottom-4 left-4 w-2 h-2 bg-primary/80 rounded-full opacity-80"></div>
+                      <div className="absolute top-1/2 left-4 w-1 h-1 bg-primary/70 rounded-full opacity-80"></div>
                     </div>
                   </div>
                 </div>
 
                 {/* Content Section */}
-                <div className={`p-8 lg:p-12 flex flex-col justify-center order-2 ${
-                  index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'
-                }`}>
+                <div className={`p-8 lg:p-12 flex flex-col justify-center order-2 ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'
+                  }`}>
                   <div className="space-y-4 mb-6">
                     <h3 className="text-2xl lg:text-3xl text-primary font-bold leading-tight">{service.title}</h3>
-                    <Separator/>
-                    <p className="text-base leading-relaxed font-medium">
+                    <Separator />
+                    <p className="text-base leading-relaxed font-medium text-foreground/80">
                       {service.description}
                     </p>
                   </div>
-                  
+
                   <div className="space-y-3">
                     {service.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center space-x-3">

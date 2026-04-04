@@ -78,15 +78,15 @@ const QnA = [
 
 export default function FAQs() {
   return (
-    <section className="w-full py-16 px-6" id="faq">
-      <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
+    <section className="section-wrap" id="faq">
+      <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 reveal-up">
         Questions? We've got{" "}
         <span className="italic font-serif text-primary">answers</span>.
       </h2>
-      
+
       <Accordion
         type={"multiple"}
-        className="border-1.5 border rounded-lg p-6"
+        className="glass-surface rounded-2xl p-6 reveal-up reveal-delay-1"
       >
         {QnA.map((item, index) => (
           <FAQ
@@ -97,8 +97,8 @@ export default function FAQs() {
           />
         ))}
       </Accordion>
-      
-      <p className="text-lg text-center mt-8 font-medium">
+
+      <p className="text-lg text-center mt-8 font-medium reveal-up reveal-delay-2">
         Still have questions? Now it's definitely the time to{" "}
         <CTAButton
           variant={"link"}

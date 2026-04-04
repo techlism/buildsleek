@@ -10,21 +10,21 @@ import { Button } from "./ui/button";
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
-  
+
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
-  
+
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
   return (
-    <nav className="sticky top-6 z-50 w-full rounded-lg border-1.5 border backdrop-blur-md bg-glassmorphic max-w-7xl mx-auto">
+    <nav className="glass-surface sticky top-6 z-50 w-full rounded-2xl max-w-7xl mx-auto reveal-up">
       <div className="px-6">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -34,40 +34,40 @@ const Navbar: React.FC = () => {
                   src="/logo.svg"
                   alt="BuildSleek"
                   width={35}
-                  height={35} 
+                  height={35}
                   className="rounded-lg"
                 />
               </Link>
             </div>
             <div className="hidden md:block ml-10">
               <div className="flex items-center space-x-6">
-                <Button 
-                  variant={"link"} 
+                <Button
+                  variant={"link"}
                   onClick={() => scrollTo("about")}
-                  className="text-base font-medium"
+                  className="text-base font-medium text-foreground/85 hover:text-primary"
                 >
                   About
                 </Button>
-                <Button 
-                  variant={"link"} 
+                <Button
+                  variant={"link"}
                   onClick={() => scrollTo("services")}
-                  className="text-base font-medium"
+                  className="text-base font-medium text-foreground/85 hover:text-primary"
                 >
                   Services
                 </Button>
               </div>
             </div>
           </div>
-          
+
           <div className="hidden md:block">
             <CTAButton message="Start a free consultation" />
           </div>
-          
+
           <div className="md:hidden">
             <Button
               onClick={toggleNavbar}
               type="button"
-              className="inline-flex items-center justify-center p-2 transition-all"
+              className="inline-flex items-center justify-center p-2 transition-all border-primary/20"
               variant={"outline"}
             >
               <span className="sr-only">Open main menu</span>
@@ -76,21 +76,21 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       {isOpen && (
-        <div className="md:hidden border-t border-gray-200 mt-2">
-          <div className="px-6 py-4 space-y-3">
-            <Button 
-              onClick={() => scrollTo("about")} 
+        <div className="md:hidden mt-2 px-3 pb-3 reveal-up">
+          <div className="glass-surface rounded-xl px-4 py-4 space-y-2">
+            <Button
+              onClick={() => scrollTo("about")}
               variant={"link"}
-              className="block w-full text-left text-base font-medium"
+              className="block w-full text-left text-base font-medium text-foreground/90 hover:text-primary hover:bg-primary/10 rounded-lg px-3 py-2"
             >
               About
             </Button>
-            <Button 
-              onClick={() => scrollTo("services")} 
+            <Button
+              onClick={() => scrollTo("services")}
               variant={"link"}
-              className="block w-full text-left text-base font-medium"
+              className="block w-full text-left text-base font-medium text-foreground/90 hover:text-primary hover:bg-primary/10 rounded-lg px-3 py-2"
             >
               Services
             </Button>
