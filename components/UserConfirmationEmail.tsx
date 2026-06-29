@@ -95,10 +95,7 @@ export default function UserConfirmationEmail({
 							{message}
 						</Text>
 						<Text className="text-base">
-							One of our team members will be in touch with you shortly. Please
-							note that this message was sent using our automated Gmail service.
-							Future communications will come directly from our official email
-							address.
+							One of our team members will be in touch with you shortly.
 						</Text>
 						<Text className="text-base mt-4">Best regards,</Text>
 						<Text className="text-base mt-1 text-primary font-semibold">
