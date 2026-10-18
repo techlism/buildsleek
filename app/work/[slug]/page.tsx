@@ -44,7 +44,7 @@ function SectionHeading({
 	title,
 }: { eyebrow: string; title: string }) {
 	return (
-		<div className="mb-8 max-w-2xl">
+		<div className="mb-6 max-w-2xl md:mb-8">
 			<p className="text-sm font-semibold uppercase tracking-wider text-primary">
 				{eyebrow}
 			</p>
@@ -125,7 +125,7 @@ export default async function ProjectPage({ params }: PageProps) {
 			</section>
 
 			{/* Hero visual */}
-			<section className="relative w-full pt-12 pb-16 md:pt-16 reveal-up reveal-delay-1">
+			<section className="relative w-full pt-10 pb-12 md:pt-16 md:pb-16 reveal-up reveal-delay-1">
 				<div className="glass-surface relative rounded-2xl p-4 pb-14 md:p-10 md:pb-20">
 					<BrowserFrame
 						src={project.cover.src}
@@ -149,7 +149,7 @@ export default async function ProjectPage({ params }: PageProps) {
 			{/* Stats */}
 			<section className="grid w-full grid-cols-2 gap-3 md:grid-cols-4 reveal-up">
 				{project.stats.map((stat) => (
-					<div key={stat.label} className="glass-surface rounded-2xl px-5 py-6">
+					<div key={stat.label} className="glass-surface rounded-2xl px-4 py-5 md:px-5 md:py-6">
 						<p className="text-3xl font-bold text-primary md:text-4xl">
 							{stat.value}
 						</p>
@@ -202,7 +202,7 @@ export default async function ProjectPage({ params }: PageProps) {
 					{project.features.map((feature) => (
 						<div
 							key={feature.title}
-							className="glass-surface rounded-2xl p-6 reveal-up"
+							className="glass-surface rounded-2xl p-5 md:p-6 reveal-up"
 						>
 							<span className="flex h-11 w-11 items-center justify-center rounded-xl border border-primary/25 bg-background/70 text-primary">
 								<feature.icon className="h-5 w-5" />
@@ -228,7 +228,7 @@ export default async function ProjectPage({ params }: PageProps) {
 						title="Screens from the live site"
 					/>
 				</div>
-				<div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
+				<div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 md:gap-y-12">
 					{project.screens.map((screen) => (
 						<figure key={screen.src} className="reveal-up">
 							<BrowserFrame
@@ -245,7 +245,7 @@ export default async function ProjectPage({ params }: PageProps) {
 				</div>
 
 				{otherPhones.length > 0 && (
-					<div className="glass-surface mt-12 flex flex-col items-center gap-8 rounded-2xl p-8 md:flex-row md:p-12 reveal-up">
+					<div className="glass-surface mt-12 flex flex-col items-center gap-8 rounded-2xl p-6 md:flex-row md:p-12 reveal-up">
 						<div className="md:max-w-xs">
 							<h3 className="text-2xl font-bold">Made for phones first</h3>
 							<p className="mt-3 text-base font-medium leading-relaxed text-foreground/75">
@@ -253,7 +253,7 @@ export default async function ProjectPage({ params }: PageProps) {
 								Every screen was designed and tested for that first.
 							</p>
 						</div>
-						<div className="flex flex-1 justify-center gap-4 md:gap-6">
+						<div className="flex w-full flex-1 justify-center gap-3 md:gap-6">
 							{project.mobileScreens.map((screen) => (
 								<PhoneFrame
 									key={screen.src}
@@ -302,9 +302,9 @@ export default async function ProjectPage({ params }: PageProps) {
 						{project.highlights.map((highlight, i) => (
 							<li
 								key={highlight.title}
-								className="glass-surface flex gap-5 rounded-2xl p-6 reveal-up"
+								className="glass-surface flex gap-4 rounded-2xl p-5 md:gap-5 md:p-6 reveal-up"
 							>
-								<span className="text-2xl font-bold text-primary/50">
+								<span className="text-xl font-bold text-primary/50 md:text-2xl">
 									{String(i + 1).padStart(2, "0")}
 								</span>
 								<div>
@@ -326,7 +326,7 @@ export default async function ProjectPage({ params }: PageProps) {
 			{/* Next project */}
 			<Link
 				href={`/work/${next.slug}`}
-				className="group glass-surface flex w-full items-center justify-between gap-6 rounded-2xl p-6 transition-colors hover:border-primary/50 md:p-8 reveal-up"
+				className="group glass-surface flex w-full items-center justify-between gap-6 rounded-2xl p-5 transition-colors hover:border-primary/50 md:p-8 reveal-up"
 			>
 				<div>
 					<p className="text-sm font-semibold text-foreground/55">

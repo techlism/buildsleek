@@ -25,7 +25,7 @@ function SpotlightShell({
 	return (
 		<section className="section-wrap px-0">
 			<div className="glass-surface overflow-hidden rounded-2xl reveal-up">
-				<div className="grid grid-cols-1 gap-10 p-6 md:p-10 lg:grid-cols-[1fr_1.3fr] lg:items-center lg:p-14">
+				<div className="grid grid-cols-1 gap-8 p-5 md:gap-10 md:p-10 lg:grid-cols-[1fr_1.3fr] lg:items-center lg:p-14">
 					<div>
 						<p className="text-sm font-semibold uppercase tracking-wider text-primary">
 							{eyebrow}
@@ -169,7 +169,7 @@ function DomainNode({
 				className="mx-auto mb-2 block h-1.5 w-10 rounded-full"
 				style={{ backgroundColor: color }}
 			/>
-			<p className="flex items-center justify-center gap-1.5 text-sm font-bold">
+			<p className="flex items-center justify-center gap-1.5 break-all text-sm font-bold">
 				<Globe className="h-4 w-4 text-primary" />
 				{domain}
 			</p>
@@ -186,7 +186,7 @@ function ImperialSpotlight() {
 			description="Both colleges run on the same app, server and database. Each domain gets its own branding and content, and staff manage both from one admin panel."
 		>
 			<div className="space-y-3">
-				<div className="flex gap-3">
+				<div className="flex flex-col gap-3 sm:flex-row">
 					<DomainNode
 						domain="ndet.co.in"
 						label="Green theme · 4 programs"

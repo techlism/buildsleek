@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function WorkPage() {
 	return (
 		<main className="flex flex-col items-center px-6" id="main">
-			<section className="w-full pt-16 pb-12 md:pt-24">
+			<section className="w-full pt-10 pb-10 md:pt-24 md:pb-12">
 				<div className="max-w-3xl reveal-up">
 					<p className="inline-flex items-center rounded-full border border-primary/20 bg-background/70 px-3 py-1 text-xs font-semibold text-primary md:text-sm">
 						Our work
@@ -40,7 +40,7 @@ export default function WorkPage() {
 				</div>
 			</section>
 
-			<section className="grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
+			<section className="grid w-full grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2">
 				{projects.map((project, index) => (
 					<div
 						key={project.slug}

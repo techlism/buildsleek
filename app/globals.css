@@ -61,7 +61,7 @@
   }
 
   .section-wrap {
-    @apply w-full px-6 py-20 md:py-24;
+    @apply w-full px-6 py-14 md:py-24;
   }
 }
 

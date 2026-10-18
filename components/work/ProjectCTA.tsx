@@ -11,7 +11,7 @@ export default function ProjectCTA({
 }: ProjectCTAProps) {
 	return (
 		<section className="section-wrap px-0">
-			<div className="glass-surface relative overflow-hidden rounded-2xl px-6 py-14 text-center md:px-10 md:py-20 reveal-up">
+			<div className="glass-surface relative overflow-hidden rounded-2xl px-5 py-10 text-center md:px-10 md:py-20 reveal-up">
 				<div
 					className="pointer-events-none absolute inset-0 opacity-30"
 					style={{

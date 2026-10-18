@@ -23,7 +23,7 @@ export default function Work() {
 					</Link>
 				</Button>
 			</div>
-			<div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+			<div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2">
 				{projects.map((project, index) => (
 					<div key={project.slug} className={`reveal-up ${index === 0 ? "lg:col-span-2" : ""}`}>
 						<ProjectCard project={project} featured={index === 0} />
