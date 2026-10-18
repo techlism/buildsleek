@@ -23,7 +23,7 @@ function FAQ({
   );
 }
 
-const QnA = [
+export const QnA = [
   {
     question: "What services do you offer?",
     answer:

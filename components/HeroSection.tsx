@@ -20,7 +20,7 @@ function Hero() {
 			<div className="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center reveal-up reveal-delay-1 max-w-4xl mx-auto">
 				<CTAButton className="px-6" message="Talk to us for free" />
 				<Button variant="outline" className="rounded-xl px-6 py-6 border-primary/20 text-foreground/90" asChild>
-					<Link href="#services">Explore services</Link>
+					<Link href="#work">See our work</Link>
 				</Button>
 			</div>
 			<div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm text-foreground/70 reveal-up reveal-delay-2 max-w-4xl mx-auto">
@@ -35,7 +35,7 @@ function Hero() {
 export default function HeroSection() {
 	return (
 		// bg-[url('/bg.avif')] bg-contain bg-no-repeat bg-center
-		<section className="relative w-full grid-pattern h-screen flex items-center justify-center px-6 overflow-hidden">
+		<section className="relative w-full grid-pattern min-h-svh py-24 flex items-center justify-center px-6 overflow-hidden">
 			<div className="relative w-full">
 				<Hero />
 			</div>

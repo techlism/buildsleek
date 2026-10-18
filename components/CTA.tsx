@@ -140,16 +140,21 @@ export function CTAButton({
 					</DialogDescription>
 				</DialogHeader>
 				{mailSentStatus === "success" ? (
-					<div className="rounded-xl border border-primary/30 bg-primary/10 p-4 text-center space-y-2">
+					<div role="status" className="rounded-xl border border-primary/30 bg-primary/10 p-4 text-center space-y-2">
 						<CheckCircle2 className="mx-auto h-8 w-8 text-primary" />
 						<p className="text-sm font-semibold text-foreground">Message sent successfully.</p>
 						<p className="text-sm text-foreground/75">We will reach out to you shortly.</p>
 						<Button className="mt-1" onClick={() => setOpen(false)}>Close</Button>
 					</div>
 				) : mailSentStatus === "error" ? (
-					<p className="text-sm font-medium p-2 text-center rounded-lg bg-destructive text-destructive-foreground">
-						Failed to send the message. Please try again.
-					</p>
+					<div role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-center space-y-3">
+						<p className="text-sm font-semibold text-foreground">
+							Failed to send the message. Please try again.
+						</p>
+						<Button className="rounded-xl" onClick={() => setMailSentStatus(null)}>
+							Try again
+						</Button>
+					</div>
 				) : (
 					<form ref={formRef} className="grid gap-4 py-4" onSubmit={sendMail}>
 						<div className="grid grid-cols-4 items-center gap-4">
@@ -161,10 +166,13 @@ export function CTAButton({
 									id="name"
 									name="name"
 									placeholder="John Doe"
+									autoComplete="name"
 									value={formValues.name}
+									aria-invalid={!!formErrors.name}
+									aria-describedby={formErrors.name ? "name-error" : undefined}
 									onChange={(e) => setFormValues((prev) => ({ ...prev, name: e.target.value }))}
 								/>
-								{formErrors.name && <p className="text-xs text-destructive">{formErrors.name}</p>}
+								{formErrors.name && <p id="name-error" className="text-xs text-destructive">{formErrors.name}</p>}
 							</div>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
@@ -176,12 +184,15 @@ export function CTAButton({
 									id="email"
 									name="email"
 									placeholder="john.doe@example.com"
+									autoComplete="email"
 									type="email"
 									value={formValues.email}
+									aria-invalid={!!formErrors.email}
+									aria-describedby={formErrors.email ? "email-error" : undefined}
 									onChange={(e) => setFormValues((prev) => ({ ...prev, email: e.target.value }))}
 									required
 								/>
-								{formErrors.email && <p className="text-xs text-destructive">{formErrors.email}</p>}
+								{formErrors.email && <p id="email-error" className="text-xs text-destructive">{formErrors.email}</p>}
 							</div>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
@@ -194,9 +205,11 @@ export function CTAButton({
 									name="message"
 									placeholder="What's on your mind?"
 									value={formValues.message}
+									aria-invalid={!!formErrors.message}
+									aria-describedby={formErrors.message ? "message-error" : undefined}
 									onChange={(e) => setFormValues((prev) => ({ ...prev, message: e.target.value }))}
 								/>
-								{formErrors.message && <p className="text-xs text-destructive">{formErrors.message}</p>}
+								{formErrors.message && <p id="message-error" className="text-xs text-destructive">{formErrors.message}</p>}
 							</div>
 						</div>
 						<DialogFooter>
@@ -206,7 +219,10 @@ export function CTAButton({
 								className="rounded-xl px-4 py-6"
 							>
 								{isSending ? (
-									<Loader2 className="animate-spin" />
+									<>
+										<Loader2 className="animate-spin" aria-hidden="true" />
+										<span className="sr-only">Sending</span>
+									</>
 								) : (
 									"Send Message"
 								)}

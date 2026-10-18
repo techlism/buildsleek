@@ -11,8 +11,20 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const navItems = [
+    { label: "About", href: "/#about" },
+    { label: "Work", href: "/work" },
+    { label: "Services", href: "/#services" },
+  ];
+
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (pathname === "/" && href.startsWith("/#")) {
+      event.preventDefault();
+      document.getElementById(href.slice(2))?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      });
+      setIsOpen(false);
+    }
   };
 
   const toggleNavbar = () => {
@@ -24,7 +36,7 @@ const Navbar: React.FC = () => {
   }, [pathname]);
 
   return (
-    <nav className="glass-surface sticky top-6 z-50 w-full rounded-2xl max-w-7xl mx-auto reveal-up">
+    <nav aria-label="Main" className="glass-surface sticky top-6 z-50 w-full rounded-2xl max-w-7xl mx-auto reveal-up">
       <div className="px-6">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -41,20 +53,18 @@ const Navbar: React.FC = () => {
             </div>
             <div className="hidden md:block ml-10">
               <div className="flex items-center space-x-6">
-                <Button
-                  variant={"link"}
-                  onClick={() => scrollTo("about")}
-                  className="text-base font-medium text-foreground/85 hover:text-primary"
-                >
-                  About
-                </Button>
-                <Button
-                  variant={"link"}
-                  onClick={() => scrollTo("services")}
-                  className="text-base font-medium text-foreground/85 hover:text-primary"
-                >
-                  Services
-                </Button>
+                {navItems.map((item) => (
+                  <Button
+                    key={item.href}
+                    variant={"link"}
+                    asChild
+                    className="text-base font-medium text-foreground/85 hover:text-primary"
+                  >
+                    <Link href={item.href} onClick={(e) => handleNavClick(e, item.href)}>
+                      {item.label}
+                    </Link>
+                  </Button>
+                ))}
               </div>
             </div>
           </div>
@@ -69,8 +79,10 @@ const Navbar: React.FC = () => {
               type="button"
               className="inline-flex items-center justify-center p-2 transition-all border-primary/20"
               variant={"outline"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
-              <span className="sr-only">Open main menu</span>
+              <span className="sr-only">{isOpen ? "Close main menu" : "Open main menu"}</span>
               {!isOpen ? <Menu size={20} /> : <X size={20} />}
             </Button>
           </div>
@@ -78,22 +90,20 @@ const Navbar: React.FC = () => {
       </div>
 
       {isOpen && (
-        <div className="md:hidden mt-2 px-3 pb-3 reveal-up">
+        <div id="mobile-menu" className="md:hidden mt-2 px-3 pb-3 reveal-up">
           <div className="glass-surface rounded-xl px-4 py-4 space-y-2">
-            <Button
-              onClick={() => scrollTo("about")}
-              variant={"link"}
-              className="block w-full text-left text-base font-medium text-foreground/90 hover:text-primary hover:bg-primary/10 rounded-lg px-3 py-2"
-            >
-              About
-            </Button>
-            <Button
-              onClick={() => scrollTo("services")}
-              variant={"link"}
-              className="block w-full text-left text-base font-medium text-foreground/90 hover:text-primary hover:bg-primary/10 rounded-lg px-3 py-2"
-            >
-              Services
-            </Button>
+            {navItems.map((item) => (
+              <Button
+                key={item.href}
+                variant={"link"}
+                asChild
+                className="block w-full text-left text-base font-medium text-foreground/90 hover:text-primary hover:bg-primary/10 rounded-lg px-3 py-2"
+              >
+                <Link href={item.href} onClick={(e) => handleNavClick(e, item.href)}>
+                  {item.label}
+                </Link>
+              </Button>
+            ))}
             <div className="pt-2">
               <CTAButton message="Start a free consultation" />
             </div>

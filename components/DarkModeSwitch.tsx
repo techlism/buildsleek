@@ -10,37 +10,30 @@ const DarkModeSwitch = () => {
 
 	useEffect(() => {
 		setMounted(true);
-		if (!theme) setTheme("dark");
-	}, [theme, setTheme]);
-
-	if (!mounted) return null;
+	}, []);
 
 	const themes = [
-		{ id: "light", icon: Sun, color: "text-amber-600" },
-		{ id: "system", icon: Monitor, color: "text-primary" },
-		{ id: "dark", icon: Moon, color: "text-blue-500" },
+		{ id: "light", icon: Sun },
+		{ id: "system", icon: Monitor },
+		{ id: "dark", icon: Moon },
 	] as const;
 
 	return (
-		<div className="inline-flex items-center bg-background/40 rounded-lg p-2 backdrop-blur-sm border  shadow-md">
-			{themes.map(({ id, icon: Icon, color }) => (
+		<div role="group" aria-label="Theme" className="glass-surface inline-flex items-center gap-1 rounded-xl p-1">
+			{themes.map(({ id, icon: Icon }) => (
 				<button
 					type="button"
 					key={id}
 					onClick={() => setTheme(id)}
-					className={`
-						flex items-center justify-center p-2 rounded-md transition-all duration-200 ease-in-out
-            			${theme === id ? "bg-background border border-border/65" : "hover:bg-background/50"}
-            			${theme === id ? "scale-105" : "scale-100"}
-            			${id !== "light" ? "ml-1" : ""}`}
+					className={`flex items-center justify-center p-2 rounded-lg border transition-colors duration-200 ${
+						mounted && theme === id
+							? "bg-primary/10 border-primary/30 text-primary"
+							: "border-transparent text-foreground/60 hover:text-primary hover:bg-primary/5"
+					}`}
 					aria-label={`Switch to ${id} theme`}
+					aria-pressed={mounted && theme === id}
 				>
-					<Icon
-						className={`
-							w-4 h-4 transition-all duration-100 ease-in-out
-							${theme === id ? color : "text-foreground/60"}
-							${theme === id ? "scale-110" : "scale-100"}`}
-					/>
+					<Icon className="w-4 h-4" aria-hidden="true" />
 				</button>
 			))}
 		</div>

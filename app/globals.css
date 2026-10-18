@@ -55,7 +55,7 @@
 
 @layer components {
   .glass-surface {
-    @apply border backdrop-blur-xl;
+    @apply border backdrop-blur-md md:backdrop-blur-xl;
     background: linear-gradient(145deg, hsl(var(--glassmorphic-bg)), hsl(var(--background) / 0.56));
     border-color: hsl(var(--primary) / 0.22);
   }
@@ -92,7 +92,22 @@
 }
 
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     @apply border-border;
   }
@@ -102,7 +117,6 @@
     background-size: auto;
     background-repeat: no-repeat;
     @apply text-foreground;
-    scroll-behavior: smooth;
 
   }
 

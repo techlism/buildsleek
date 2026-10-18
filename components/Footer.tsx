@@ -10,6 +10,17 @@ export default async function Footer() {
 				<div className="flex flex-col items-center space-y-4 opacity-85">
 					<p className="text-center">© 2026 BuildSleek. All rights reserved.</p>
 					<p className="text-center">Made with ❤️ by the BuildSleek team</p>
+					<p className="text-center text-xs text-foreground/60">
+						Phone frame by Rafael Fernandez,{" "}
+						<a
+							href="https://creativecommons.org/licenses/by-sa/4.0/"
+							target="_blank"
+							rel="noreferrer"
+							className="underline hover:text-primary"
+						>
+							CC BY-SA 4.0
+						</a>
+					</p>
 				</div>
 				<div>
 					<DarkModeSwitch />

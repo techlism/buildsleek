@@ -167,8 +167,11 @@ export default async function Services() {
                       <div className="relative z-10 w-48 h-48 lg:w-56 lg:h-56 rounded-lg flex items-center justify-center bg-white/55 dark:bg-white border border-primary/45">
                         <img
                           src={service.svgPath}
-                          alt={service.title}
+                          alt=""
+                          width={192}
+                          height={192}
                           loading="lazy"
+                          decoding="async"
                           className="w-40 h-40 lg:w-48 lg:h-48 object-contain"
                         />
                       </div>
@@ -195,7 +198,7 @@ export default async function Services() {
                   <div className="space-y-3">
                     {service.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center space-x-3">
-                        <span className="text-base font-medium">-&gt; {feature}</span>
+                        <span className="text-base font-medium"><span aria-hidden="true">-&gt;</span> {feature}</span>
                       </div>
                     ))}
                   </div>
